@@ -11,7 +11,8 @@ import UIKit
 
 class AppCoordinator : Coordinator {
     var viewController : UINavigationController?
-    
+    var childCoordinators: [Coordinator] = []
+
     init(viewController : UINavigationController) {
         self.viewController = viewController
     }
@@ -19,6 +20,7 @@ class AppCoordinator : Coordinator {
     func start(){
         let networkService = NetworkService()
         let listCoordinator = ListCoordinator(viewController: viewController!.topViewController as! ListViewController, networkService: networkService)
+        childCoordinators.append(listCoordinator)
         listCoordinator.start()
     }
 }

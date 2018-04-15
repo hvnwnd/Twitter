@@ -9,5 +9,6 @@
 import Foundation
 
 protocol Coordinator {
-    func start()    
+    var childCoordinators: [Coordinator] { get set }
+    func start()
 }

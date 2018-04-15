@@ -13,6 +13,7 @@ import UIKit
 
 class DetailCoordinator : Coordinator, DetailViewControllerProtocol {
     var viewController : DetailViewController
+    var childCoordinators: [Coordinator] = []
     var tweet : Tweet
 
     init(viewController: DetailViewController, tweet: Tweet) {

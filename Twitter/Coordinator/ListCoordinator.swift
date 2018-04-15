@@ -11,22 +11,24 @@ import UIKit
 import RxSwift
 
 class ListCoordinator : Coordinator {
-    var networkService : NetworkService?
-    var viewController : ListViewController?
+    var networkService : NetworkService
+    var viewController : ListViewController
+    var childCoordinators: [Coordinator] = []
+
     let disposeBag = DisposeBag()
     
     init(viewController: ListViewController, networkService: NetworkService) {
         self.viewController = viewController
-        self.viewController?.delegate = self
         self.networkService = networkService
+        self.viewController.delegate = self
     }
     
     func start() {
-        networkService?.fetchTweets()
+        networkService.fetchTweets()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { tweets in
-            self.viewController?.tweets = tweets
-            self.viewController?.tableView.reloadData()
+            self.viewController.tweets = tweets
+            self.viewController.tableView.reloadData()
         }).disposed(by: disposeBag)
     }
 }
@@ -34,6 +36,7 @@ class ListCoordinator : Coordinator {
 extension ListCoordinator : ListViewControllerProtocol{
     func listViewControllerDidChoose(viewController: ListViewController, destViewController: UIViewController, tweet: Tweet) {
         let detailCoordinator = DetailCoordinator(viewController: destViewController as! DetailViewController, tweet: tweet)
+        childCoordinators.append(detailCoordinator)
         detailCoordinator.start()
     }
 }
