@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AppCoordinator : Coordinator {
-    var viewController : UINavigationController?
+    fileprivate var viewController : UINavigationController?
     var childCoordinators: [Coordinator] = []
 
     init(viewController : UINavigationController) {

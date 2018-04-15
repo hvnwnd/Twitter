@@ -9,12 +9,11 @@
 import UIKit
 
 protocol ListViewControllerProtocol : class {
-    func listViewControllerDidChoose(viewController: ListViewController, destViewController: UIViewController, tweet: Tweet)
+    func listViewControllerDidChoose(viewController: ListViewController, destViewController: UIViewController, row: Int)
 }
 
 class ListViewController: UIViewController {
     @IBOutlet weak var tableView : UITableView!
-    var tweets : [Tweet]?
     public weak var delegate : ListViewControllerProtocol?
     
     override func viewDidLoad() {
@@ -22,28 +21,8 @@ class ListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let t = tweets, let row = tableView.indexPathForSelectedRow?.row {
-            delegate?.listViewControllerDidChoose(viewController: self, destViewController: segue.destination, tweet: t[row])
+        if let row = tableView.indexPathForSelectedRow?.row {
+            delegate?.listViewControllerDidChoose(viewController: self, destViewController: segue.destination, row: row)
         }
     }
 }
-
-extension ListViewController : UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        if let t = tweets {
-            return t.count
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetTableViewCell") as! TweetTableViewCell
-        if let t = tweets {
-            cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.text = t[indexPath.row].text
-        }
-        return cell
-    }
-}
-
-

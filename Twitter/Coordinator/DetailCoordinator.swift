@@ -12,9 +12,9 @@ import RxSwift
 import UIKit
 
 class DetailCoordinator : Coordinator {
-    var viewController : DetailViewController
+    fileprivate var viewController : DetailViewController
     var childCoordinators: [Coordinator] = []
-    var tweet : Tweet
+    fileprivate var tweet : Tweet
 
     init(viewController: DetailViewController, tweet: Tweet) {
         self.viewController = viewController
@@ -29,13 +29,16 @@ class DetailCoordinator : Coordinator {
 extension DetailCoordinator : DetailViewControllerProtocol {
     func detailViewControllerShouldUpdateContent() {
         viewController.textLabel.text = tweet.text
-        viewController.dateLabel.text = DateFormatter.displayFormat.string(from: tweet.date!)
+        if let date = tweet.date{
+            viewController.dateLabel.text = "Created at: \(DateFormatter.displayFormat.string(from: date))"
+        }
+        
         if let count = tweet.retweetCount {
             viewController.retweetLabel.text = "Retweeted: \(count) times"
         }
         
         if let tags = tweet.entity?.hashTags, tags.count > 0 {
-            viewController.hashtagLabel.text = "HashTags : \(tags.compactMap{ $0.text! }.joined(separator: ", "))"
+            viewController.hashtagLabel.text = "Hash tags : \(tags.compactMap{ $0.text! }.joined(separator: ", "))"
         }
     }
     
@@ -47,5 +50,4 @@ extension DetailCoordinator : DetailViewControllerProtocol {
             print("Twitter scheme not allowed")
         }
     }
-
 }
