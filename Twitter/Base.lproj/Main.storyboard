@@ -106,6 +106,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Retweet"/>
+                                <connections>
+                                    <action selector="shareTweet" destination="0JT-8K-Dax" eventType="touchUpInside" id="y6U-6H-z0Q"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

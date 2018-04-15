@@ -133,5 +133,9 @@ extension String {
         }
         return ""
     }
+    
+    func urlEncoding() -> String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
 }
 

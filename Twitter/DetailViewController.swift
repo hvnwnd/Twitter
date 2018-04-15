@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 
 protocol DetailViewControllerProtocol : class {
     func detailViewControllerShouldUpdateContent()
@@ -17,7 +15,6 @@ protocol DetailViewControllerProtocol : class {
 
 class DetailViewController: UIViewController {
     weak var delegate : DetailViewControllerProtocol?
-    private let disposeBag = DisposeBag()
     
     @IBOutlet weak var textLabel : UILabel!
     @IBOutlet weak var dateLabel : UILabel!
@@ -28,16 +25,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate?.detailViewControllerShouldUpdateContent()
-        
-        retweetButton.rx.tap
-            .subscribe(){event in
-                self.shareTweet()
-            }
-            .disposed(by: disposeBag)
-
     }
     
-    func shareTweet() {
+    @IBAction func shareTweet() {
         delegate?.retweetButtonClicked()
     }
 }

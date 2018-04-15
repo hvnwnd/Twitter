@@ -15,20 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        func myJust<E>(_ element: E) -> Observable<E> {
-            return Observable.create { observer in
-                observer.on(.next(element))
-                observer.on(.completed)
-                return Disposables.create()
-            }
-        }
-        
-        
         let appCoordinator = AppCoordinator(viewController: window?.rootViewController as! UINavigationController)
         appCoordinator.start()
-        // Override point for customization after application launch.
-        
-        
         return true
     }
 

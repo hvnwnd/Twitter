@@ -18,7 +18,7 @@ extension DateFormatter {
     
     static let displayFormat: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd YYYY HH:ss"
+        formatter.dateFormat = "dd MMM YYYY"
         return formatter
     }()
 }
@@ -49,14 +49,10 @@ struct Tweet : Decodable{
     }
     
     func sharedText() -> String? {
-
         guard text != nil,date != nil else {
             return nil
         }
-        return "Le \(date), @SkyrockFM a tweeté : \(text)"
-        
-        //[[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]];
-
+        return "Le \(DateFormatter.displayFormat.string(from: date!)), @SkyrockFM a tweeté : \(text!)"
     }
 }
 

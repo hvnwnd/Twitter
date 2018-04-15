@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class DetailCoordinator : Coordinator, DetailViewControllerProtocol {
+class DetailCoordinator : Coordinator {
     var viewController : DetailViewController
     var childCoordinators: [Coordinator] = []
     var tweet : Tweet
@@ -24,8 +24,9 @@ class DetailCoordinator : Coordinator, DetailViewControllerProtocol {
 
     func start(){
     }
+}
 
-    
+extension DetailCoordinator : DetailViewControllerProtocol {
     func detailViewControllerShouldUpdateContent() {
         viewController.textLabel.text = tweet.text
         viewController.dateLabel.text = DateFormatter.displayFormat.string(from: tweet.date!)
@@ -39,10 +40,11 @@ class DetailCoordinator : Coordinator, DetailViewControllerProtocol {
     }
     
     func retweetButtonClicked() {
-        if let msg = tweet.sharedText(), UIApplication.shared.canOpenURL(URL(string: "twitter://")!) {
-            UIApplication.shared.open(URL(string: "twitter://post?message=\(msg)")!, options: [:], completionHandler: nil)
+        if let msg = tweet.sharedText()?.urlEncoding(), UIApplication.shared.canOpenURL(URL(string: "twitter://")!){
+            let encodedUrl = "twitter://post?message=\(msg)"
+            UIApplication.shared.open(URL(string: encodedUrl)!, options: [:], completionHandler: nil)
         }else{
-            
+            print("Twitter scheme not allowed")
         }
     }
 

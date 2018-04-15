@@ -7,16 +7,15 @@
 //
 
 import UIKit
-import RxSwift
 
 protocol ListViewControllerProtocol : class {
     func listViewControllerDidChoose(viewController: ListViewController, destViewController: UIViewController, tweet: Tweet)
 }
 
 class ListViewController: UIViewController {
+    @IBOutlet weak var tableView : UITableView!
     var tweets : [Tweet]?
     public weak var delegate : ListViewControllerProtocol?
-    @IBOutlet weak var tableView : UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
